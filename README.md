@@ -6,22 +6,19 @@ If you want to learn more about Quarkus, please visit its website: https://quark
 
 ## Running the application in dev mode
 
-Subir o projeto
-`mvn compile quarkus:dev`
+Subir o projeto <br/>
+`mvn compile quarkus:dev` <br/>
+`mvn compile quarkus:dev -Dquarkus.args="a b c"` <br/>
 
-Listar dependências disponíveis
+Listar dependências disponíveis <br/>
 `mvn quarkus:list-extensions`
 
-Add extensions
-`mvn quarkus:add-extension -Dextensions="hibernate-validator"`
+Add extensions <br/>
+`mvn quarkus:add-extension -Dextensions="hibernate-validator"` <br/>
 `mvn quarkus:add-extension -Dextensions="jdbc-h2,hibernate-orm,hibernate-orm-panache,resteasy-jsonb"`
 
-You can run your application in dev mode that enables live coding using:
-```shell script
-./mvnw compile quarkus:dev
-```
-
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
+Metrics
+`http://localhost:8080/q/metrics`
 
 ## Packaging and running the application
 

@@ -6,6 +6,13 @@ import io.github.dougllasfps.quarkussocial.rest.dto.CreateUserRequest;
 import io.github.dougllasfps.quarkussocial.rest.dto.ResponseError;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
+import org.eclipse.microprofile.metrics.MetricUnits;
+import org.eclipse.microprofile.metrics.annotation.Counted;
+import org.eclipse.microprofile.metrics.annotation.Gauge;
+import org.eclipse.microprofile.metrics.annotation.SimplyTimed;
+import org.eclipse.microprofile.metrics.annotation.Timed;
+import org.eclipse.microprofile.reactive.messaging.Channel;
+import org.eclipse.microprofile.reactive.messaging.Emitter;
 
 import javax.inject.Inject;
 import javax.print.attribute.standard.Media;
@@ -31,7 +38,15 @@ public class UserResource {
         this.validator = validator;
     }
 
+    @Inject
+    @Channel("parametros")
+    Emitter<String> emitter;
+
     @POST
+    @Counted(name = "createUserConted", description = "quantidade de acessos")
+    @Timed(name = "createUserTimed", description = "description")
+    @SimplyTimed(name = "createUserSimpleTimed", description = "description")
+    @Gauge(name = "createUserTrasaction", description = "Valores de Transação", unit = MetricUnits.MINUTES)
     @Transactional
     public Response createUser( CreateUserRequest userRequest ){
 
@@ -46,7 +61,9 @@ public class UserResource {
         user.setAge(userRequest.getAge());
         user.setName(userRequest.getName());
 
-        repository.persist(user);
+        //repository.persist(user);
+
+        emitter.send("TESTE123");
 
         return Response
                 .status(Response.Status.CREATED.getStatusCode())

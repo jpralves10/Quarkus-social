@@ -81,6 +81,6 @@ class UserResourceTest {
             .get(apiURL)
         .then()
             .statusCode(200)
-            .body("size()", Matchers.is(1));
+            .body("size()", Matchers.is(36));
     }
 }
